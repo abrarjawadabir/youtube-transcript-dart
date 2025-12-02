@@ -148,9 +148,8 @@ Future<void> _listTranscripts(YouTubeTranscriptApi api, String videoId) async {
 
   for (final transcript in transcriptList) {
     final type = transcript.isGenerated ? 'Auto-generated' : 'Manual';
-    final translatable = transcript.isTranslatable
-        ? '(translatable)'
-        : '(not translatable)';
+    final translatable =
+        transcript.isTranslatable ? '(translatable)' : '(not translatable)';
 
     print('  - ${transcript.language} [${transcript.languageCode}]');
     print('    Type: $type $translatable');

@@ -42,14 +42,13 @@ class YouTubeTranscriptApi {
     Map<String, String>? headers,
     Duration? timeout,
     TranscriptHttpClient? httpClient,
-  }) : _httpClient =
-           httpClient ??
-           TranscriptHttpClient(
-             proxyConfig: proxyConfig,
-             defaultHeaders: headers,
-             timeout: timeout ?? const Duration(seconds: 30),
-           ),
-       _closeClientOnDispose = httpClient == null;
+  })  : _httpClient = httpClient ??
+            TranscriptHttpClient(
+              proxyConfig: proxyConfig,
+              defaultHeaders: headers,
+              timeout: timeout ?? const Duration(seconds: 30),
+            ),
+        _closeClientOnDispose = httpClient == null;
 
   /// Fetches a transcript for the given video ID.
   ///
