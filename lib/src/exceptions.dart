@@ -17,19 +17,13 @@ class TranscriptException implements Exception {
 /// Thrown when the YouTube video is unavailable.
 class VideoUnavailableException extends TranscriptException {
   VideoUnavailableException(String videoId)
-      : super(
-          'The video is not available',
-          videoId: videoId,
-        );
+    : super('The video is not available', videoId: videoId);
 }
 
 /// Thrown when transcripts are disabled for the video.
 class TranscriptsDisabledException extends TranscriptException {
   TranscriptsDisabledException(String videoId)
-      : super(
-          'Subtitles are disabled for this video',
-          videoId: videoId,
-        );
+    : super('Subtitles are disabled for this video', videoId: videoId);
 }
 
 /// Thrown when no transcript is found for the requested languages.
@@ -42,10 +36,10 @@ class NoTranscriptFoundException extends TranscriptException {
     required this.requestedLanguages,
     required this.availableLanguages,
   }) : super(
-          'No transcript found for languages: ${requestedLanguages.join(", ")}. '
-          'Available languages: ${availableLanguages.join(", ")}',
-          videoId: videoId,
-        );
+         'No transcript found for languages: ${requestedLanguages.join(", ")}. '
+         'Available languages: ${availableLanguages.join(", ")}',
+         videoId: videoId,
+       );
 }
 
 /// Thrown when no manually created transcript is found.
@@ -86,18 +80,18 @@ class TranslationNotAvailableException extends TranscriptException {
     required String videoId,
     required this.targetLanguage,
   }) : super(
-          'Translation to "$targetLanguage" is not available for this transcript',
-          videoId: videoId,
-        );
+         'Translation to "$targetLanguage" is not available for this transcript',
+         videoId: videoId,
+       );
 }
 
 /// Thrown when too many requests are made to YouTube.
 class TooManyRequestsException extends TranscriptException {
   TooManyRequestsException(String videoId)
-      : super(
-          'YouTube is receiving too many requests from this IP. Please try again later or use a proxy',
-          videoId: videoId,
-        );
+    : super(
+        'YouTube is receiving too many requests from this IP. Please try again later or use a proxy',
+        videoId: videoId,
+      );
 }
 
 /// Thrown when the request is blocked by YouTube (e.g., bot detection).
@@ -105,10 +99,10 @@ class RequestBlockedException extends TranscriptException {
   final int? statusCode;
 
   RequestBlockedException(String videoId, {this.statusCode})
-      : super(
-          'The request was blocked by YouTube. This might be due to bot detection. Consider using a proxy',
-          videoId: videoId,
-        );
+    : super(
+        'The request was blocked by YouTube. This might be due to bot detection. Consider using a proxy',
+        videoId: videoId,
+      );
 
   @override
   String toString() {
@@ -132,21 +126,14 @@ class IpBlockedException extends RequestBlockedException {
 /// Thrown when the video ID is invalid.
 class InvalidVideoIdException extends TranscriptException {
   InvalidVideoIdException(String videoId)
-      : super(
-          'Invalid video ID format',
-          videoId: videoId,
-        );
+    : super('Invalid video ID format', videoId: videoId);
 }
 
 /// Thrown when there's an error fetching the transcript from YouTube.
 class TranscriptFetchException extends TranscriptException {
   final Object? cause;
 
-  TranscriptFetchException(
-    super.message, {
-    super.videoId,
-    this.cause,
-  });
+  TranscriptFetchException(super.message, {super.videoId, this.cause});
 
   @override
   String toString() {
@@ -161,11 +148,7 @@ class TranscriptFetchException extends TranscriptException {
 class TranscriptParseException extends TranscriptException {
   final Object? cause;
 
-  TranscriptParseException(
-    super.message, {
-    super.videoId,
-    this.cause,
-  });
+  TranscriptParseException(super.message, {super.videoId, this.cause});
 
   @override
   String toString() {
@@ -179,10 +162,10 @@ class TranscriptParseException extends TranscriptException {
 /// Thrown when cookies are invalid or rejected.
 class InvalidCookiesException extends TranscriptException {
   InvalidCookiesException(String videoId)
-      : super(
-          'The provided cookies are invalid or have been rejected by YouTube',
-          videoId: videoId,
-        );
+    : super(
+        'The provided cookies are invalid or have been rejected by YouTube',
+        videoId: videoId,
+      );
 }
 
 /// Thrown when a PoToken (Proof of Origin token) is required.
@@ -191,11 +174,11 @@ class InvalidCookiesException extends TranscriptException {
 /// additional authentication tokens to access transcripts.
 class PoTokenRequiredException extends TranscriptException {
   PoTokenRequiredException(String videoId)
-      : super(
-          'YouTube requires a PoToken (Proof of Origin token) to access this transcript. '
-          'This is a recent anti-bot protection measure. '
-          'Consider using the Python library which may have updated workarounds, '
-          'or try accessing the transcript directly on YouTube.',
-          videoId: videoId,
-        );
+    : super(
+        'YouTube requires a PoToken (Proof of Origin token) to access this transcript. '
+        'This is a recent anti-bot protection measure. '
+        'Consider using the Python library which may have updated workarounds, '
+        'or try accessing the transcript directly on YouTube.',
+        videoId: videoId,
+      );
 }

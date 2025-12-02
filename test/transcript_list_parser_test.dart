@@ -7,16 +7,17 @@ import 'package:youtube_transcript_api/youtube_transcript_api.dart';
 void main() {
   group('TranscriptListParser', () {
     // Mock fetch function for testing
-    Future<FetchedTranscript> mockFetch(String url, bool preserveFormatting) async {
+    Future<FetchedTranscript> mockFetch(
+      String url,
+      bool preserveFormatting,
+    ) async {
       return FetchedTranscript(
         videoId: 'test123',
         language: 'English',
         languageCode: 'en',
         isGenerated: false,
         isTranslated: false,
-        snippets: [
-          TranscriptSnippet(text: 'Hello', start: 0.0, duration: 1.0),
-        ],
+        snippets: [TranscriptSnippet(text: 'Hello', start: 0.0, duration: 1.0)],
       );
     }
 
@@ -66,12 +67,15 @@ void main() {
     group('parse', () {
       test('parses captionTracks from InnerTube response', () async {
         // Load real fixture
-        final fixtureContent = await File('test/fixtures/innertube_response.json').readAsString();
+        final fixtureContent = await File(
+          'test/fixtures/innertube_response.json',
+        ).readAsString();
         final data = json.decode(fixtureContent) as Map<String, dynamic>;
-        
+
         // Extract the captions renderer
         final captions = data['captions'] as Map<String, dynamic>;
-        final captionsRenderer = captions['playerCaptionsTracklistRenderer'] as Map<String, dynamic>;
+        final captionsRenderer =
+            captions['playerCaptionsTracklistRenderer'] as Map<String, dynamic>;
 
         final result = TranscriptListParser.parse(
           videoId: 'eF8Qqp7rjDg',
@@ -85,9 +89,7 @@ void main() {
       });
 
       test('throws TranscriptsDisabledException for empty captionTracks', () {
-        final captionsJson = {
-          'captionTracks': <dynamic>[],
-        };
+        final captionsJson = {'captionTracks': <dynamic>[]};
 
         expect(
           () => TranscriptListParser.parse(
@@ -119,20 +121,24 @@ void main() {
               'baseUrl': 'https://www.youtube.com/api/timedtext?lang=en',
               'languageCode': 'en',
               'name': {
-                'runs': [{'text': 'English'}]
+                'runs': [
+                  {'text': 'English'},
+                ],
               },
               'kind': 'manual',
               'isTranslatable': true,
-            }
+            },
           ],
           'translationLanguages': [
             {
               'languageCode': 'de',
               'languageName': {
-                'runs': [{'text': 'German'}]
-              }
-            }
-          ]
+                'runs': [
+                  {'text': 'German'},
+                ],
+              },
+            },
+          ],
         };
 
         final result = TranscriptListParser.parse(
@@ -157,11 +163,13 @@ void main() {
               'baseUrl': 'https://www.youtube.com/api/timedtext?lang=en',
               'languageCode': 'en',
               'name': {
-                'runs': [{'text': 'English (auto-generated)'}]
+                'runs': [
+                  {'text': 'English (auto-generated)'},
+                ],
               },
               'kind': 'asr',
               'isTranslatable': false,
-            }
+            },
           ],
         };
 
@@ -181,12 +189,15 @@ void main() {
         final captionsJson = {
           'captionTracks': [
             {
-              'baseUrl': 'https://www.youtube.com/api/timedtext?lang=en&fmt=srv3',
+              'baseUrl':
+                  'https://www.youtube.com/api/timedtext?lang=en&fmt=srv3',
               'languageCode': 'en',
               'name': {
-                'runs': [{'text': 'English'}]
+                'runs': [
+                  {'text': 'English'},
+                ],
               },
-            }
+            },
           ],
         };
 
@@ -196,7 +207,10 @@ void main() {
           fetchFunction: mockFetch,
         );
 
-        expect(result.transcripts.first.transcriptUrl!.contains('&fmt=srv3'), isFalse);
+        expect(
+          result.transcripts.first.transcriptUrl!.contains('&fmt=srv3'),
+          isFalse,
+        );
       });
 
       test('handles missing language name gracefully', () {
@@ -206,7 +220,7 @@ void main() {
               'baseUrl': 'https://www.youtube.com/api/timedtext?lang=en',
               'languageCode': 'en',
               // No 'name' field
-            }
+            },
           ],
         };
 
@@ -217,7 +231,10 @@ void main() {
         );
 
         expect(result.transcripts.length, equals(1));
-        expect(result.transcripts.first.language, equals('en')); // Falls back to languageCode
+        expect(
+          result.transcripts.first.language,
+          equals('en'),
+        ); // Falls back to languageCode
       });
 
       test('handles malformed caption track entries', () {
@@ -256,18 +273,30 @@ void main() {
             {
               'baseUrl': 'https://www.youtube.com/api/timedtext?lang=en',
               'languageCode': 'en',
-              'name': {'runs': [{'text': 'English'}]},
+              'name': {
+                'runs': [
+                  {'text': 'English'},
+                ],
+              },
             },
             {
               'baseUrl': 'https://www.youtube.com/api/timedtext?lang=de',
               'languageCode': 'de',
-              'name': {'runs': [{'text': 'German'}]},
+              'name': {
+                'runs': [
+                  {'text': 'German'},
+                ],
+              },
             },
             {
               'baseUrl': 'https://www.youtube.com/api/timedtext?lang=en',
               'languageCode': 'en',
               'kind': 'asr',
-              'name': {'runs': [{'text': 'English (auto-generated)'}]},
+              'name': {
+                'runs': [
+                  {'text': 'English (auto-generated)'},
+                ],
+              },
             },
           ],
         };

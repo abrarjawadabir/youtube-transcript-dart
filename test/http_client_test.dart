@@ -75,9 +75,7 @@ void main() {
 
     test('creates with custom headers', () {
       final client = TranscriptHttpClient(
-        defaultHeaders: {
-          'X-Custom-Header': 'value',
-        },
+        defaultHeaders: {'X-Custom-Header': 'value'},
       );
 
       expect(client.defaultHeaders['X-Custom-Header'], equals('value'));
@@ -86,9 +84,7 @@ void main() {
     });
 
     test('creates with custom timeout', () {
-      final client = TranscriptHttpClient(
-        timeout: const Duration(seconds: 60),
-      );
+      final client = TranscriptHttpClient(timeout: const Duration(seconds: 60));
 
       expect(client.timeout, equals(const Duration(seconds: 60)));
     });

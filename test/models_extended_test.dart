@@ -10,9 +10,7 @@ void main() {
         languageCode: 'en',
         isGenerated: true,
         isTranslated: false,
-        snippets: [
-          TranscriptSnippet(text: 'Hello', start: 0.0, duration: 1.0),
-        ],
+        snippets: [TranscriptSnippet(text: 'Hello', start: 0.0, duration: 1.0)],
       );
 
       expect(transcript.videoId, equals('test123'));
@@ -59,11 +57,11 @@ void main() {
 
       final rawData = transcript.toRawData();
       expect(rawData.length, equals(2));
-      
+
       expect(rawData[0]['text'], equals('Hello'));
       expect(rawData[0]['start'], equals(0.0));
       expect(rawData[0]['duration'], equals(1.5));
-      
+
       expect(rawData[1]['text'], equals('World'));
       expect(rawData[1]['start'], equals(1.5));
       expect(rawData[1]['duration'], equals(2.0));
@@ -76,9 +74,7 @@ void main() {
         languageCode: 'en',
         isGenerated: true,
         isTranslated: false,
-        snippets: [
-          TranscriptSnippet(text: 'Hello', start: 0.0, duration: 1.0),
-        ],
+        snippets: [TranscriptSnippet(text: 'Hello', start: 0.0, duration: 1.0)],
       );
 
       final str = transcript.toString();
@@ -102,7 +98,7 @@ void main() {
 
       expect(transcript.snippets, isEmpty);
       expect(transcript.toRawData(), isEmpty);
-      
+
       var count = 0;
       for (final _ in transcript) {
         count++;
@@ -146,11 +142,7 @@ void main() {
     });
 
     test('fromJson handles double values', () {
-      final json = {
-        'text': 'Hello',
-        'start': 5.5,
-        'duration': 3.25,
-      };
+      final json = {'text': 'Hello', 'start': 5.5, 'duration': 3.25};
 
       final snippet = TranscriptSnippet.fromJson(json);
       expect(snippet.start, equals(5.5));
@@ -219,10 +211,22 @@ void main() {
     });
 
     test('equality is based on both fields', () {
-      final l1 = TranslationLanguage(languageCode: 'en', languageName: 'English');
-      final l2 = TranslationLanguage(languageCode: 'en', languageName: 'English');
-      final l3 = TranslationLanguage(languageCode: 'en', languageName: 'Anglais');
-      final l4 = TranslationLanguage(languageCode: 'de', languageName: 'English');
+      final l1 = TranslationLanguage(
+        languageCode: 'en',
+        languageName: 'English',
+      );
+      final l2 = TranslationLanguage(
+        languageCode: 'en',
+        languageName: 'English',
+      );
+      final l3 = TranslationLanguage(
+        languageCode: 'en',
+        languageName: 'Anglais',
+      );
+      final l4 = TranslationLanguage(
+        languageCode: 'de',
+        languageName: 'English',
+      );
 
       expect(l1, equals(l2));
       expect(l1, isNot(equals(l3)));

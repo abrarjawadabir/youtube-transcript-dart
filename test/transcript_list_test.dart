@@ -81,12 +81,15 @@ void main() {
       expect(found.languageCode, equals('de'));
     });
 
-    test('findTranscript throws NoTranscriptFoundException for missing language', () {
-      expect(
-        () => transcriptList.findTranscript(['fr']),
-        throwsA(isA<NoTranscriptFoundException>()),
-      );
-    });
+    test(
+      'findTranscript throws NoTranscriptFoundException for missing language',
+      () {
+        expect(
+          () => transcriptList.findTranscript(['fr']),
+          throwsA(isA<NoTranscriptFoundException>()),
+        );
+      },
+    );
 
     test('findTranscript exception includes available languages', () {
       try {
@@ -146,10 +149,7 @@ void main() {
     });
 
     test('handles empty transcript list', () {
-      final emptyList = TranscriptList(
-        videoId: 'test123',
-        transcripts: [],
-      );
+      final emptyList = TranscriptList(videoId: 'test123', transcripts: []);
 
       expect(
         () => emptyList.findTranscript(['en']),

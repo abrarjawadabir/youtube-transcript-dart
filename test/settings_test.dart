@@ -18,7 +18,10 @@ void main() {
 
     test('innertubeApiUrl can be used for API requests', () {
       final url = innertubeApiUrl.replaceAll('{api_key}', 'AIzaSyTest');
-      expect(url, equals('https://www.youtube.com/youtubei/v1/player?key=AIzaSyTest'));
+      expect(
+        url,
+        equals('https://www.youtube.com/youtubei/v1/player?key=AIzaSyTest'),
+      );
     });
 
     test('innertubeContext has required fields', () {
@@ -29,18 +32,25 @@ void main() {
     });
 
     test('innertubeApiKeyPattern matches valid API keys', () {
-      const html = '"INNERTUBE_API_KEY":"AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"';
+      const html =
+          '"INNERTUBE_API_KEY":"AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"';
       final match = innertubeApiKeyPattern.firstMatch(html);
       expect(match, isNotNull);
-      expect(match!.group(1), equals('AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8'));
+      expect(
+        match!.group(1),
+        equals('AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8'),
+      );
     });
 
-    test('innertubeApiKeyPattern matches keys with underscores and hyphens', () {
-      const html = '"INNERTUBE_API_KEY":"test_key-123"';
-      final match = innertubeApiKeyPattern.firstMatch(html);
-      expect(match, isNotNull);
-      expect(match!.group(1), equals('test_key-123'));
-    });
+    test(
+      'innertubeApiKeyPattern matches keys with underscores and hyphens',
+      () {
+        const html = '"INNERTUBE_API_KEY":"test_key-123"';
+        final match = innertubeApiKeyPattern.firstMatch(html);
+        expect(match, isNotNull);
+        expect(match!.group(1), equals('test_key-123'));
+      },
+    );
 
     test('innertubeApiKeyPattern handles whitespace', () {
       const html = '"INNERTUBE_API_KEY": "AIzaSyTest123"';

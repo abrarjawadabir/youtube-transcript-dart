@@ -5,10 +5,7 @@ void main() {
   group('ProxyConfig', () {
     group('WebshareProxyConfig', () {
       test('creates with required parameters', () {
-        final config = WebshareProxyConfig(
-          username: 'user',
-          password: 'pass',
-        );
+        final config = WebshareProxyConfig(username: 'user', password: 'pass');
 
         expect(config.username, equals('user'));
         expect(config.password, equals('pass'));
@@ -40,20 +37,14 @@ void main() {
       });
 
       test('getHttpProxyUrl returns correct format', () {
-        final config = WebshareProxyConfig(
-          username: 'user',
-          password: 'pass',
-        );
+        final config = WebshareProxyConfig(username: 'user', password: 'pass');
 
         final url = config.getHttpProxyUrl();
         expect(url, equals('http://user:pass@p.webshare.io:80'));
       });
 
       test('getHttpsProxyUrl returns correct format', () {
-        final config = WebshareProxyConfig(
-          username: 'user',
-          password: 'pass',
-        );
+        final config = WebshareProxyConfig(username: 'user', password: 'pass');
 
         final url = config.getHttpsProxyUrl();
         expect(url, equals('http://user:pass@p.webshare.io:80'));
@@ -71,10 +62,7 @@ void main() {
       });
 
       test('getHeaders returns empty map', () {
-        final config = WebshareProxyConfig(
-          username: 'user',
-          password: 'pass',
-        );
+        final config = WebshareProxyConfig(username: 'user', password: 'pass');
 
         expect(config.getHeaders(), isEmpty);
       });
@@ -99,7 +87,10 @@ void main() {
           httpUrl: 'http://proxy.example.com:8080',
         );
 
-        expect(config.getHttpProxyUrl(), equals('http://proxy.example.com:8080'));
+        expect(
+          config.getHttpProxyUrl(),
+          equals('http://proxy.example.com:8080'),
+        );
         expect(config.getHttpsProxyUrl(), isNull);
       });
 
@@ -109,7 +100,10 @@ void main() {
         );
 
         expect(config.getHttpProxyUrl(), isNull);
-        expect(config.getHttpsProxyUrl(), equals('https://proxy.example.com:8443'));
+        expect(
+          config.getHttpsProxyUrl(),
+          equals('https://proxy.example.com:8443'),
+        );
       });
 
       test('creates with both URLs', () {
@@ -118,15 +112,18 @@ void main() {
           httpsUrl: 'https://proxy.example.com:8443',
         );
 
-        expect(config.getHttpProxyUrl(), equals('http://proxy.example.com:8080'));
-        expect(config.getHttpsProxyUrl(), equals('https://proxy.example.com:8443'));
+        expect(
+          config.getHttpProxyUrl(),
+          equals('http://proxy.example.com:8080'),
+        );
+        expect(
+          config.getHttpsProxyUrl(),
+          equals('https://proxy.example.com:8443'),
+        );
       });
 
       test('throws when neither URL provided', () {
-        expect(
-          () => GenericProxyConfig(),
-          throwsA(isA<ArgumentError>()),
-        );
+        expect(() => GenericProxyConfig(), throwsA(isA<ArgumentError>()));
       });
 
       test('getHeaders returns empty by default', () {
@@ -140,9 +137,7 @@ void main() {
       test('getHeaders returns custom headers', () {
         final config = GenericProxyConfig(
           httpUrl: 'http://proxy.example.com:8080',
-          customHeaders: {
-            'X-Custom-Header': 'value',
-          },
+          customHeaders: {'X-Custom-Header': 'value'},
         );
 
         expect(config.getHeaders()['X-Custom-Header'], equals('value'));

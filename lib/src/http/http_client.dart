@@ -38,13 +38,13 @@ class TranscriptHttpClient {
     Map<String, String>? defaultHeaders,
     this.timeout = const Duration(seconds: 30),
     http.Client? customClient,
-  })  : defaultHeaders = {
-          'User-Agent':
-              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept-Language': 'en-US,en;q=0.9',
-          ...?defaultHeaders,
-        },
-        _customClient = customClient;
+  }) : defaultHeaders = {
+         'User-Agent':
+             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+         'Accept-Language': 'en-US,en;q=0.9',
+         ...?defaultHeaders,
+       },
+       _customClient = customClient;
 
   /// Makes a POST request to the specified URL.
   Future<HttpResponse> post(
@@ -64,11 +64,7 @@ class TranscriptHttpClient {
       if (_customClient != null) {
         // Use custom client (for testing)
         response = await _customClient!
-            .post(
-              Uri.parse(url),
-              headers: mergedHeaders,
-              body: body,
-            )
+            .post(Uri.parse(url), headers: mergedHeaders, body: body)
             .timeout(timeout);
       } else if (proxyConfig != null) {
         // Use proxy
@@ -81,11 +77,7 @@ class TranscriptHttpClient {
       } else {
         // Direct request
         response = await http
-            .post(
-              Uri.parse(url),
-              headers: mergedHeaders,
-              body: body,
-            )
+            .post(Uri.parse(url), headers: mergedHeaders, body: body)
             .timeout(timeout);
       }
 
@@ -104,10 +96,7 @@ class TranscriptHttpClient {
   }
 
   /// Makes a GET request to the specified URL.
-  Future<HttpResponse> get(
-    String url, {
-    Map<String, String>? headers,
-  }) async {
+  Future<HttpResponse> get(String url, {Map<String, String>? headers}) async {
     final mergedHeaders = {
       ...defaultHeaders,
       if (proxyConfig != null) ...proxyConfig!.getHeaders(),
@@ -124,11 +113,7 @@ class TranscriptHttpClient {
             .timeout(timeout);
       } else if (proxyConfig != null) {
         // Use proxy
-        response = await _makeProxiedRequest(
-          url,
-          mergedHeaders,
-          method: 'GET',
-        );
+        response = await _makeProxiedRequest(url, mergedHeaders, method: 'GET');
       } else {
         // Direct request
         response = await http

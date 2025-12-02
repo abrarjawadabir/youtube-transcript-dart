@@ -88,7 +88,8 @@ class TranscriptListParser {
     required Future<FetchedTranscript> Function(
       String url,
       bool preserveFormatting,
-    ) fetchFunction,
+    )
+    fetchFunction,
   }) {
     try {
       // captionsJson IS the playerCaptionsTracklistRenderer
@@ -178,10 +179,7 @@ class TranscriptListParser {
         throw TranscriptsDisabledException(videoId);
       }
 
-      return TranscriptList(
-        videoId: videoId,
-        transcripts: transcripts,
-      );
+      return TranscriptList(videoId: videoId, transcripts: transcripts);
     } catch (e) {
       if (e is TranscriptException) rethrow;
       throw TranscriptParseException(

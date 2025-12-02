@@ -22,7 +22,10 @@ void main() {
       expect(transcript.isGenerated, isFalse);
       expect(transcript.isTranslatable, isTrue);
       expect(transcript.translationLanguages.length, equals(1));
-      expect(transcript.transcriptUrl, equals('https://example.com/transcript'));
+      expect(
+        transcript.transcriptUrl,
+        equals('https://example.com/transcript'),
+      );
     });
 
     test('creates auto-generated Transcript', () {
@@ -73,7 +76,10 @@ void main() {
     });
 
     test('fetch throws PoTokenRequiredException for xpe URLs', () async {
-      Future<FetchedTranscript> mockFetch(String url, bool preserveFormatting) async {
+      Future<FetchedTranscript> mockFetch(
+        String url,
+        bool preserveFormatting,
+      ) async {
         return FetchedTranscript(
           videoId: 'test',
           language: 'en',
@@ -102,7 +108,10 @@ void main() {
     });
 
     test('fetch succeeds with valid function and URL', () async {
-      Future<FetchedTranscript> mockFetch(String url, bool preserveFormatting) async {
+      Future<FetchedTranscript> mockFetch(
+        String url,
+        bool preserveFormatting,
+      ) async {
         return FetchedTranscript(
           videoId: 'test123',
           language: 'English',

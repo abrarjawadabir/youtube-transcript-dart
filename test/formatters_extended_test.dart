@@ -110,8 +110,16 @@ void main() {
           isGenerated: false,
           isTranslated: false,
           snippets: [
-            TranscriptSnippet(text: 'Quote "test" here', start: 0.0, duration: 1.0),
-            TranscriptSnippet(text: 'Backslash \\ here', start: 1.0, duration: 1.0),
+            TranscriptSnippet(
+              text: 'Quote "test" here',
+              start: 0.0,
+              duration: 1.0,
+            ),
+            TranscriptSnippet(
+              text: 'Backslash \\ here',
+              start: 1.0,
+              duration: 1.0,
+            ),
           ],
         );
 
@@ -127,7 +135,7 @@ void main() {
       test('includes all metadata fields', () {
         final formatter = JsonFormatterWithMetadata(pretty: true);
         final result = formatter.format(sampleTranscript);
-        
+
         expect(result, contains('"videoId"'));
         expect(result, contains('"language"'));
         expect(result, contains('"languageCode"'));
@@ -153,7 +161,7 @@ void main() {
       test('formats hours correctly', () {
         final formatter = VttFormatter();
         final result = formatter.format(longTranscript);
-        
+
         expect(result, contains('00:00:00.000'));
         expect(result, contains('01:00:00.000'));
         expect(result, contains('02:00:00.500'));
@@ -193,7 +201,7 @@ void main() {
       test('has sequential indices', () {
         final formatter = SrtFormatter();
         final result = formatter.format(sampleTranscript);
-        
+
         expect(result, contains('1\n'));
         expect(result, contains('2\n'));
       });
@@ -201,7 +209,7 @@ void main() {
       test('uses comma for milliseconds', () {
         final formatter = SrtFormatter();
         final result = formatter.format(sampleTranscript);
-        
+
         // SRT uses comma, not period
         expect(result, contains(',000'));
         expect(result, contains(',500'));
@@ -210,7 +218,7 @@ void main() {
       test('formats long videos correctly', () {
         final formatter = SrtFormatter();
         final result = formatter.format(longTranscript);
-        
+
         expect(result, contains('01:00:00,000'));
         expect(result, contains('02:00:00,500'));
       });

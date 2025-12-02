@@ -42,13 +42,14 @@ class YouTubeTranscriptApi {
     Map<String, String>? headers,
     Duration? timeout,
     TranscriptHttpClient? httpClient,
-  })  : _httpClient = httpClient ??
-            TranscriptHttpClient(
-              proxyConfig: proxyConfig,
-              defaultHeaders: headers,
-              timeout: timeout ?? const Duration(seconds: 30),
-            ),
-        _closeClientOnDispose = httpClient == null;
+  }) : _httpClient =
+           httpClient ??
+           TranscriptHttpClient(
+             proxyConfig: proxyConfig,
+             defaultHeaders: headers,
+             timeout: timeout ?? const Duration(seconds: 30),
+           ),
+       _closeClientOnDispose = httpClient == null;
 
   /// Fetches a transcript for the given video ID.
   ///
@@ -163,13 +164,8 @@ class YouTubeTranscriptApi {
 
     final response = await _httpClient.post(
       url,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: json.encode({
-        'context': innertubeContext,
-        'videoId': videoId,
-      }),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'context': innertubeContext, 'videoId': videoId}),
     );
 
     _checkResponseStatus(response.statusCode, videoId);
