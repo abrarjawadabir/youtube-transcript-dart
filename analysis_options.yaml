@@ -1,0 +1,12 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+
+linter:
+  rules:
+    - always_declare_return_types
+    - prefer_single_quotes
+    - require_trailing_commas
+
